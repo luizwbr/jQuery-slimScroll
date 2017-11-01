@@ -76,7 +76,13 @@
         borderRadius: '7px',
 
         // sets border radius of the rail
-        railBorderRadius : '7px'
+        railBorderRadius : '7px',
+
+        // set the element to wrapper div
+        mainHtmlElementWrapper: '<div></div>',
+
+        // set element to other html elements, like scrollbar
+        otherHtmlElementWrapper: '<div></div>'
       };
 
       var o = $.extend(defaults, options);
@@ -86,7 +92,8 @@
 
       var isOverPanel, isOverBar, isDragg, queueHide, touchDif,
         barHeight, percentScroll, lastScroll,
-        divS = '<div></div>',
+        mainDivS = o.mainHtmlElementWrapper,
+        otherDivS = o.otherHtmlElementWrapper,
         minBarHeight = 30,
         releaseScroll = false;
 
@@ -150,7 +157,7 @@
         {
             if ('destroy' in options)
             {
-            	return;
+              return;
             }
         }
 
@@ -158,7 +165,7 @@
         o.height = (o.height == 'auto') ? me.parent().height() : o.height;
 
         // wrap content
-        var wrapper = $(divS)
+        var wrapper = $(mainDivS)
           .addClass(o.wrapperClass)
           .css({
             position: 'relative',
@@ -175,7 +182,7 @@
         });
 
         // create scrollbar rail
-        var rail = $(divS)
+        var rail = $(otherDivS)
           .addClass(o.railClass)
           .css({
             width: o.size,
@@ -190,7 +197,7 @@
           });
 
         // create scrollbar
-        var bar = $(divS)
+        var bar = $(otherDivS)
           .addClass(o.barClass)
           .css({
             background: o.color,
@@ -281,8 +288,8 @@
           // prevent scrolling the page if necessary
           if(!releaseScroll)
           {
-  		      e.originalEvent.preventDefault();
-		      }
+            e.originalEvent.preventDefault();
+          }
           if (e.originalEvent.touches.length)
           {
             // see how far user swiped
